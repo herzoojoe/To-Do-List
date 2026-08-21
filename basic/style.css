@@ -1,0 +1,416 @@
+:root {
+  --color-work: #4a90e2;
+  --color-personal: #27ae60;
+  --color-study: #8e44ad;
+  --bg: #f4f5f7;
+  --card-bg: #ffffff;
+  --panel-bg: #f8f9fb;
+  --border: #eef0f3;
+  --input-border: #d1d5db;
+  --text: #1f2937;
+  --text-muted: #9ca3af;
+  --text-secondary: #4b5563;
+  --track-bg: #e5e7eb;
+  --accent: #4f7cff;
+  --accent-hover: #3d63e0;
+  --accent-text: #ffffff;
+  --danger-bg: #fee2e2;
+  --danger-text: #dc2626;
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] {
+  --color-work: #6ea8f0;
+  --color-personal: #3fd07f;
+  --color-study: #b06fd4;
+  --bg: #14171c;
+  --card-bg: #1c2028;
+  --panel-bg: #20242c;
+  --border: #343a46;
+  --input-border: #3a4150;
+  --text: #e5e7eb;
+  --text-muted: #7d8794;
+  --text-secondary: #b4bcc8;
+  --track-bg: #343a46;
+  --accent: #6c8fff;
+  --accent-hover: #85a1ff;
+  --accent-text: #14171c;
+  --danger-bg: #3a2020;
+  --danger-text: #f27272;
+  --shadow: rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.app {
+  width: 100%;
+  max-width: 600px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow);
+  padding: 28px;
+  transition: background-color 0.2s ease;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+}
+
+.theme-toggle {
+  position: absolute;
+  right: 0;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+.dashboard {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.dashboard-overall {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.dashboard-overall-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.dashboard-overall-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dashboard-overall-percent {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  min-width: 36px;
+  text-align: right;
+}
+
+.bar-track {
+  height: 8px;
+  background: var(--track-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.25s ease;
+}
+
+.dashboard-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-category {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-category-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-align: center;
+}
+
+.dashboard-category[data-category="work"] .dashboard-category-label { background: var(--color-work); }
+.dashboard-category[data-category="personal"] .dashboard-category-label { background: var(--color-personal); }
+.dashboard-category[data-category="study"] .dashboard-category-label { background: var(--color-study); }
+
+.dashboard-category[data-category="work"] .bar-fill { background: var(--color-work); }
+.dashboard-category[data-category="personal"] .bar-fill { background: var(--color-personal); }
+.dashboard-category[data-category="study"] .bar-fill { background: var(--color-study); }
+
+.dashboard-category .bar-track {
+  height: 6px;
+}
+
+.dashboard-category-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  min-width: 40px;
+  text-align: right;
+}
+
+.add-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.add-form input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--card-bg);
+  color: var(--text);
+  transition: border-color 0.2s ease;
+}
+
+.add-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.add-form button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-form button:hover {
+  background: var(--accent-hover);
+}
+
+.add-form select {
+  padding: 12px 10px;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.filter-tab {
+  padding: 6px 14px;
+  border: 1px solid var(--input-border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.filter-tab:hover {
+  background: var(--panel-bg);
+}
+
+.filter-tab.active {
+  background: var(--text);
+  color: var(--card-bg);
+  border-color: var(--text);
+}
+
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.todo-item:hover {
+  background: var(--panel-bg);
+  transform: translateY(-1px);
+}
+
+.todo-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.todo-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.todo-text {
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.todo-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.todo-time {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.category-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 999px;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.category-tag[data-category="work"] { background: var(--color-work); }
+.category-tag[data-category="personal"] { background: var(--color-personal); }
+.category-tag[data-category="study"] { background: var(--color-study); }
+
+.delete-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 20px 0 4px;
+}
+
+.theme-toggle:focus-visible,
+.filter-tab:focus-visible,
+.add-form button:focus-visible,
+.delete-btn:focus-visible,
+.add-form input:focus-visible,
+.add-form select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  .app {
+    padding: 20px 16px;
+  }
+
+  .add-form {
+    flex-wrap: wrap;
+  }
+
+  .add-form input {
+    flex-basis: 100%;
+  }
+
+  .add-form select {
+    flex: 1;
+  }
+
+  .dashboard-overall {
+    grid-template-columns: 1fr auto;
+    row-gap: 6px;
+  }
+
+  .dashboard-overall .bar-track {
+    grid-column: 1 / -1;
+  }
+}
